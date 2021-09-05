@@ -6,13 +6,13 @@ namespace TakamineProduction
 	/// <summary>
 	/// DXライブラリの起動・終了の処理を簡略化するクラス。
 	/// </summary>
-	public class DXLibmanager
+	public class DXLibManager
 	{
 		/// <summary>初期化済みかを表す</summary>
 		public bool IsInitialized { get { return DX.DxLib_IsInit() != 0; } }
 
 		/// <summary>デストラクタ（ここでDXLIBの終了）</summary>
-		~DXLibmanager() => End();
+		~DXLibManager() => End();
 
 		/// <summary>DXLIBを直ちに終了する（通常はデストラクタで自動的に終了する）</summary>
 		public int End() => DX.DxLib_End();
