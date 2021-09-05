@@ -8,8 +8,15 @@ namespace TakamineProduction
 	/// </summary>
 	public class DXLibmanager
 	{
+		/// <summary>初期化済みかを表す</summary>
+		public bool IsInitialized { get { return DX.DxLib_IsInit() != 0; } }
+
 		/// <summary>デストラクタ（ここでDXLIBの終了）</summary>
-		~DXLibmanager() { DX.DxLib_End(); }
+		~DXLibmanager() => End();
+
+		/// <summary>DXLIBを直ちに終了する（通常はデストラクタで自動的に終了する）</summary>
+		public int End() => DX.DxLib_End();
+
 
 		/// <summary>マニュアル設定でDXLIBを初期化する。名前付き引数("引数名":"実引数")の使用を推奨</summary>
 		/// <param name="scr">ウィンドウのサイズ(x,y)とそのビットレート(bit)</param>
@@ -27,8 +34,7 @@ namespace TakamineProduction
 		/// <param name="font_cache_premul">作成するフォントデータを「乗算済みα」用にする</param>
 		/// <param name="nodll_err_str">DLLが見つからなかった時のエラーテキスト</param>
 		/// <param name="dxlib_err_str">DXLIBの初期化に失敗した時のエラーテキスト</param>
-		/// <exception cref="Exception"></exception>
-		public DXLibmanager(
+		public void Init(
 			(int x, int y, int bit) scr,
 			(byte r, byte g, byte b) back,
 			(int level, int quality) sample,
@@ -63,8 +69,6 @@ namespace TakamineProduction
 		}
 
 		/// <summary>マネージャーの初期設定でDXLIBを初期化する。</summary>
-		/// <exception cref="Exception"></exception>
-		public DXLibmanager() : this((640, 480, 32), (0, 0, 0), (1, 0))
-		{ }
+		public void Init() => Init((640, 480, 32), (0, 0, 0), (1, 0));
 	}
 }
