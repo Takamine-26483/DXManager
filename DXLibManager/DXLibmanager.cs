@@ -4,20 +4,14 @@ using DxLibDLL;
 namespace TakamineProduction
 {
 	/// <summary>
-	/// DXライブラリの起動・終了の処理を簡略化するクラス。シングルトンでインスタンスを生成しているのでInitするだけでOK
+	/// DXライブラリの起動・終了の処理を簡略化するクラス。
 	/// </summary>
-	public sealed class DXLibmanager
+	public class DXLibmanager
 	{
-		/// <summary>Staticで生成したインスタンス</summary>
-		private static DXLibmanager instance = new DXLibmanager();
-
-
-		private DXLibmanager() { }
-
 		/// <summary>デストラクタ（ここでDXLIBの終了）</summary>
 		~DXLibmanager() { DX.DxLib_End(); }
 
-		/// <summary>☆DXLIBを初期化します。名前付き引数("引数名":"実引数")の使用を推奨</summary>
+		/// <summary>マニュアル設定でDXLIBを初期化する。名前付き引数("引数名":"実引数")の使用を推奨</summary>
 		/// <param name="scr">ウィンドウのサイズ(x,y)とそのビットレート(bit)</param>
 		/// <param name="back">画面背景色RGB</param>
 		/// <param name="sample">マルチサンプルの設定。マルチサンプルに使う画面の倍率(level)と綺麗さ具合(quality:0~3を指定)</param>
@@ -33,7 +27,8 @@ namespace TakamineProduction
 		/// <param name="font_cache_premul">作成するフォントデータを「乗算済みα」用にする</param>
 		/// <param name="nodll_err_str">DLLが見つからなかった時のエラーテキスト</param>
 		/// <param name="dxlib_err_str">DXLIBの初期化に失敗した時のエラーテキスト</param>
-		public static void Init(
+		/// <exception cref="Exception"></exception>
+		public DXLibmanager(
 			(int x, int y, int bit) scr,
 			(byte r, byte g, byte b) back,
 			(int level, int quality) sample,
@@ -46,40 +41,30 @@ namespace TakamineProduction
 			bool double_startable = false,
 			bool out_log = true,
 			bool graphics_reset_when_screen_change = false,
-			bool font_cache_premul = true,
-			string nodll_err_str = "DLLが見つかりませんでした。", string dxlib_err_str = "DXLibの初期化に失敗しました。"
-			)
+			bool font_cache_premul = true)
 		{
-			void MesAndExit(string mes, string cap)
-			{
-				//MessageBox.Show(mes, cap, MessageBoxButtons.OK, MessageBoxIcon.Hand);
-				Environment.Exit(-1);
-			}
+			DX.SetMainWindowText(title);
+			DX.SetGraphMode(scr.x, scr.y, scr.bit);
+			DX.SetBackgroundColor(back.r, back.g, back.b);
+			DX.SetOutApplicationLogValidFlag(out_log ? 1 : 0);
+			DX.SetDoubleStartValidFlag(double_startable ? 1 : 0);
+			DX.SetWaitVSyncFlag(wait_vsync ? 1 : 0);
+			DX.ChangeWindowMode(win_mode ? 1 : 0);
 
-			try
-			{
-				DX.SetMainWindowText(title);
-				DX.SetGraphMode(scr.x, scr.y, scr.bit);
-				DX.SetBackgroundColor(back.r, back.g, back.b);
-				DX.SetOutApplicationLogValidFlag(out_log ? 1 : 0);
-				DX.SetDoubleStartValidFlag(double_startable ? 1 : 0);
-				DX.SetWaitVSyncFlag(wait_vsync ? 1 : 0);
-				DX.ChangeWindowMode(win_mode ? 1 : 0);
+			if (DX.DxLib_Init() == -1)
+				throw new Exception("DxLib_Init() == -1");
 
-				if (DX.DxLib_Init() == -1)
-					MesAndExit(dxlib_err_str, "DxLib初期化エラー");
-
-				DX.SetAlwaysRunFlag(always_run ? 1 : 0);
-				DX.SetWindowSizeExtendRate(extend_rate);
-				DX.SetCreateDrawValidGraphMultiSample(sample.level, sample.quality);
-				DX.SetChangeScreenModeGraphicsSystemResetFlag(graphics_reset_when_screen_change ? 1 : 0);
-				DX.SetFontCacheUsePremulAlphaFlag(font_cache_premul ? 1 : 0);
-				DX.SetDrawMode(draw_mode);
-			}
-			catch (DllNotFoundException)
-			{
-				MesAndExit(nodll_err_str, "DLL不見当エラー");
-			}
+			DX.SetAlwaysRunFlag(always_run ? 1 : 0);
+			DX.SetWindowSizeExtendRate(extend_rate);
+			DX.SetCreateDrawValidGraphMultiSample(sample.level, sample.quality);
+			DX.SetChangeScreenModeGraphicsSystemResetFlag(graphics_reset_when_screen_change ? 1 : 0);
+			DX.SetFontCacheUsePremulAlphaFlag(font_cache_premul ? 1 : 0);
+			DX.SetDrawMode(draw_mode);
 		}
+
+		/// <summary>マネージャーの初期設定でDXLIBを初期化する。</summary>
+		/// <exception cref="Exception"></exception>
+		public DXLibmanager() : this((640, 480, 32), (0, 0, 0), (1, 0))
+		{ }
 	}
 }

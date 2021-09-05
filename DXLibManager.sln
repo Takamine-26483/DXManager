@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DXLibManager", "DXLibManager\DXLibManager.csproj", "{BF959561-FC0A-48C8-A8DF-29577EFD021B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{F9699345-0EEC-456D-8B7B-B9D262EFE26D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BF959561-FC0A-48C8-A8DF-29577EFD021B} = {BF959561-FC0A-48C8-A8DF-29577EFD021B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

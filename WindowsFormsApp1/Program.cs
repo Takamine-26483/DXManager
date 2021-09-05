@@ -19,7 +19,7 @@ namespace WindowsFormsApp1
 		[STAThread]
 		static void Main()
 		{
-			DXLibmanager.Init((800,600,32),(255,0,0),(1,0));
+			var dxM = new DXLibmanager();
 
 			while (DX.ProcessMessage() == 0)
 			{
