@@ -20,12 +20,14 @@ namespace WindowsFormsApp1
 		static void Main()
 		{
 			var dxm = new DXLibManager();
-			dxm.Init();
+   			dxm.Init(draw_mode:DX.DX_DRAWMODE_BILINEAR);
 
 			while (DX.ProcessMessage() == 0)
 			{
 				if (dxm.IsInitialized)
 					DX.DrawString(10, 10, "しょきか", DX.GetColor(255, 255, 255));
+				if (DX.CheckHitKeyAll() != 0)
+					dxm.End();
 			}
 		}
 	}

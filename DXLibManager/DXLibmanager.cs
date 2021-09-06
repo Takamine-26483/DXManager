@@ -18,10 +18,15 @@ namespace TakamineProduction
 		public int End() => DX.DxLib_End();
 
 
-		/// <summary>マニュアル設定でDXLIBを初期化する。名前付き引数("引数名":"実引数")の使用を推奨</summary>
-		/// <param name="scr">ウィンドウのサイズ(x,y)とそのビットレート(bit)</param>
-		/// <param name="back">画面背景色RGB</param>
-		/// <param name="sample">マルチサンプルの設定。マルチサンプルに使う画面の倍率(level)と綺麗さ具合(quality:0~3を指定)</param>
+		/// <summary>DXLIBを初期化する。名前付き引数("引数名":"実引数")の使用を推奨</summary>
+		/// <param name="width">ウィンドウの横幅</param>
+		/// <param name="height">ウィンドウの縦幅</param>
+		/// <param name="bit">ビットレート</param>
+		/// <param name="bgc_r">画面背景色の赤色の輝度</param>
+		/// <param name="bgc_g">画面背景色の緑色の輝度</param>
+		/// <param name="bgc_b">画面背景色の青色の輝度</param>
+		/// <param name="sample_level">マルチサンプルに使う画面の倍率(1~)</param>
+		/// <param name="sample_quality">マルチサンプルの綺麗さ具合(0~3)</param>
 		/// <param name="title">タイトルバーのテキスト</param>
 		/// <param name="win_mode">ウィンドウモードで起動する</param>
 		/// <param name="extend_rate">画面の拡大倍率</param>
@@ -33,9 +38,14 @@ namespace TakamineProduction
 		/// <param name="graphics_reset_when_screen_change">フルスクリーン切り替え時、グラフィックハンドルをリセットする</param>
 		/// <param name="font_cache_premul">作成するフォントデータを「乗算済みα」用にする</param>
 		public void Init(
-			(int x, int y, int bit) scr,
-			(byte r, byte g, byte b) back,
-			(int level, int quality) sample,
+			int width = 640,
+			int height = 480,
+			int bit = 32,
+			byte bgc_r = 0,
+			byte bgc_g = 0,
+			byte bgc_b = 0,
+			int sample_level = 1,
+			int sample_quality = 0,
 			string title = "BRAND-NEW SOFTWARE",
 			bool win_mode = true,
 			float extend_rate = 1.0f,
@@ -48,8 +58,8 @@ namespace TakamineProduction
 			bool font_cache_premul = true)
 		{
 			DX.SetMainWindowText(title);
-			DX.SetGraphMode(scr.x, scr.y, scr.bit);
-			DX.SetBackgroundColor(back.r, back.g, back.b);
+			DX.SetGraphMode(width, height, bit);
+			DX.SetBackgroundColor(bgc_r, bgc_g, bgc_b);
 			DX.SetOutApplicationLogValidFlag(out_log ? 1 : 0);
 			DX.SetDoubleStartValidFlag(double_startable ? 1 : 0);
 			DX.SetWaitVSyncFlag(wait_vsync ? 1 : 0);
@@ -60,13 +70,10 @@ namespace TakamineProduction
 
 			DX.SetAlwaysRunFlag(always_run ? 1 : 0);
 			DX.SetWindowSizeExtendRate(extend_rate);
-			DX.SetCreateDrawValidGraphMultiSample(sample.level, sample.quality);
+			DX.SetCreateDrawValidGraphMultiSample(sample_level, sample_quality);
 			DX.SetChangeScreenModeGraphicsSystemResetFlag(graphics_reset_when_screen_change ? 1 : 0);
 			DX.SetFontCacheUsePremulAlphaFlag(font_cache_premul ? 1 : 0);
 			DX.SetDrawMode(draw_mode);
 		}
-
-		/// <summary>マネージャーの初期設定でDXLIBを初期化する。</summary>
-		public void Init() => Init((640, 480, 32), (0, 0, 0), (1, 0));
 	}
 }
