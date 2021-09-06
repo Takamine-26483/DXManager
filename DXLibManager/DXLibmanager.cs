@@ -32,8 +32,6 @@ namespace TakamineProduction
 		/// <param name="out_log">DXLIBのログを出力する</param>
 		/// <param name="graphics_reset_when_screen_change">フルスクリーン切り替え時、グラフィックハンドルをリセットする</param>
 		/// <param name="font_cache_premul">作成するフォントデータを「乗算済みα」用にする</param>
-		/// <param name="nodll_err_str">DLLが見つからなかった時のエラーテキスト</param>
-		/// <param name="dxlib_err_str">DXLIBの初期化に失敗した時のエラーテキスト</param>
 		public void Init(
 			(int x, int y, int bit) scr,
 			(byte r, byte g, byte b) back,

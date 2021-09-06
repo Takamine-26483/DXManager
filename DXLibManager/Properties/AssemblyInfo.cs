@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("DXLibManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("DXライブラリの起動・終了の処理を簡略化するクラス。")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DXLibManager")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright © Takamine 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
