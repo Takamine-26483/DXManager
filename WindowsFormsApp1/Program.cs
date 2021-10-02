@@ -6,8 +6,7 @@ using System.Windows.Forms;
 
 using TakamineProduction;
 using DxLibDLL;
-
-
+using System.Drawing;
 
 namespace WindowsFormsApp1
 {
@@ -19,15 +18,28 @@ namespace WindowsFormsApp1
 		[STAThread]
 		static void Main()
 		{
-			var dxm = new DXLibManager();
-   			dxm.Init(draw_mode:DX.DX_DRAWMODE_BILINEAR);
-
-			while (DX.ProcessMessage() == 0)
+			var dxManager = new DXManager
 			{
-				if (dxm.IsInitialized)
-					DX.DrawString(10, 10, "しょきか", DX.GetColor(255, 255, 255));
-				if (DX.CheckHitKeyAll() != 0)
-					dxm.End();
+				WindowMode = true,
+				BackgroundColor = Color.Gray,
+				AlwaysRun = true,
+				MainWindowIcon = Properties.Resources.zz.Handle,
+				MainWindowText = "hoge!?",
+				GraphMode = (600, 600, 32),
+				ChangeScreenModeGraphicsSystemReset = false,
+				UsePremulAlphaConvertLoad = true,
+				TransColor = Color.FromArgb(255, 0, 255),
+				WindowSizeExtendRate = 1f
+			};
+			
+			dxManager.Init(DXManager.DXDrawMode.Bilinear);
+			while (dxManager.ProcMSG())
+			{
+				DX.ClearDrawScreen();
+
+
+
+				DX.ScreenFlip();
 			}
 		}
 	}
