@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
 				WindowMode = true,
 				BackgroundColor = Color.Gray,
 				AlwaysRun = true,
-				MainWindowIcon = Properties.Resources.zz.Handle,
+				//MainWindowIcon = Properties.Resources.あいこん.Handle,
 				MainWindowText = "hoge!?",
 				GraphMode = (600, 600, 32),
 				ChangeScreenModeGraphicsSystemReset = false,
