@@ -7,7 +7,7 @@ namespace TakamineProduction
 	/// <summary>DXライブラリの必須処理やよく使いそうな設定を簡略化するクラス。</summary>
 	public class DXManager
 	{
-		/// <summary>コンストラクタ</summary>
+		/// <summary>コンストラクタ（SetOutApplicationLogValidFlagを実行する）</summary>
 		/// /// <param name="outLog">ログ出力を行うかのフラグ</param>
 		public DXManager(bool outLog)
 		=> DX.SetOutApplicationLogValidFlag(outLog ? 1 : 0);
