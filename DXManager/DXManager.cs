@@ -7,6 +7,11 @@ namespace TakamineProduction
 	/// <summary>DXライブラリの必須処理やよく使いそうな設定を簡略化するクラス。</summary>
 	public class DXManager
 	{
+		/// <summary>コンストラクタ</summary>
+		/// /// <param name="outLog">ログ出力を行うかのフラグ</param>
+		public DXManager(bool outLog)
+		=> DX.SetOutApplicationLogValidFlag(outLog ? 1 : 0);
+
 		/// <summary>デストラクタ（DxLib_Endを実行する）</summary>
 		~DXManager() => End();
 
@@ -14,12 +19,10 @@ namespace TakamineProduction
 		/// <param name="drawMode">描画モード</param>
 		/// <param name="sysCommandOff">システムのキーフックを無効にするかのフラグ（AltキーとF10キーで処理が止まるのを防げる）</param>
 		/// <param name="waitVSync">ScreenFlip実行時、ＣＲＴの垂直同期信号待ちをするかのフラグ</param>
-		/// <param name="outLog">ログ出力を行うかのフラグ</param>
 		/// <param name="allowDoubleStart">多重起動を許可するかのフラグ</param>
 		/// <returns>DxLib_Initの戻り値</returns>
-		public int Init(DXDrawMode drawMode = DXDrawMode.Nearest, bool sysCommandOff = true, bool waitVSync = true, bool outLog = true, bool allowDoubleStart = false)
+		public int Init(DXDrawMode drawMode = DXDrawMode.Nearest, bool sysCommandOff = true, bool waitVSync = true, bool allowDoubleStart = false)
 		{
-			DX.SetOutApplicationLogValidFlag(outLog ? 1 : 0);
 			DX.SetDoubleStartValidFlag(allowDoubleStart ? 1 : 0);
 			DX.SetWaitVSyncFlag(waitVSync ? 1 : 0);
 			DX.SetSysCommandOffFlag(sysCommandOff ? 1 : 0);

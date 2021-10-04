@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
 		[STAThread]
 		static void Main()
 		{
-			var dxManager = new DXManager
+			var dxManager = new DXManager(false)
 			{
 				WindowMode = true,
 				BackgroundColor = Color.Gray,
