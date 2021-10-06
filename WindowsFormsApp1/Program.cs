@@ -31,9 +31,15 @@ namespace WindowsFormsApp1
 				TransColor = Color.FromArgb(255, 0, 255),
 				WindowSizeExtendRate = 1f
 			};
-			
+			dxManager.EntryPoint = Program.DxMain;
 			dxManager.Init(DXManager.DXDrawMode.Bilinear);
-			while (dxManager.ProcMSG())
+			dxManager.Start();
+		}
+
+
+		static void DxMain(DXManager dxm)
+		{
+			while (dxm.ProcMSG())
 			{
 				DX.ClearDrawScreen();
 

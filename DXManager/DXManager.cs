@@ -77,7 +77,6 @@ namespace TakamineProduction
 			}
 			set => LastReturn = DX.SetTransColor(value.R, value.G, value.B);
 		}
-
 		/// <summary>ウィンドウモードで表示するフラグ</summary>
 		public bool WindowMode
 		{
@@ -90,7 +89,10 @@ namespace TakamineProduction
 			get => DX.GetAlwaysRunFlag() == 1;
 			set => LastReturn = DX.SetAlwaysRunFlag(value ? 1 : 0);
 		}
-		
+		/// <summary>Startで実行される関数(引数のインスタンスはこのオブジェクト自身が渡される。)</summary>
+		public Action<DXManager> EntryPoint { protected get; set; }
+		/// <summary>EntryPointを実行する(引数のインスタンスはこのオブジェクト自身が渡される。)</summary>
+		public void Start() => EntryPoint?.Invoke(this);
 		
 		/// <summary>描画モード</summary>
 		public enum DXDrawMode
